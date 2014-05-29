@@ -1,7 +1,10 @@
 package com.rubensworks.custommealery.config;
 
+import java.util.List;
+
 import net.minecraft.item.EnumRarity;
 
+import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -41,6 +44,9 @@ public class MealConfig {
     
     @SerializedName("hasEffect")
     private boolean hasEffect = false;
+    
+    @SerializedName("potionEffects")
+    private List<PotionEffectConfig> potionEffects = Lists.newLinkedList();
 
     /**
      * @return the id
@@ -124,6 +130,13 @@ public class MealConfig {
      */
     public void setConfigLocation(String configLocation) {
         this.configLocation = configLocation;
+    }
+
+    /**
+     * @return the potionEffects
+     */
+    public List<PotionEffectConfig> getPotionEffects() {
+        return potionEffects;
     }
     
 }

@@ -5,11 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 import com.rubensworks.custommealery.Reference;
 import com.rubensworks.custommealery.config.MealConfig;
+import com.rubensworks.custommealery.config.PotionEffectConfig;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,6 +22,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  *
  */
 public class Meal extends ItemFood {
+    
+    private static final int POTION_DURATION_MULTIPLIER = 20;
     
     private MealConfig config;
 
@@ -76,7 +80,22 @@ public class Meal extends ItemFood {
     @Override
     public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
         --itemStack.stackSize;
-        // TODO: potion effects
+        
+        // Apply potion effects
+        if(!world.isRemote) {
+            for(PotionEffectConfig potionEffectConfig : config.getPotionEffects()) {
+                if(potionEffectConfig.getId() > 0
+                        && world.rand.nextFloat() < potionEffectConfig.getProbability()) {
+                    player.addPotionEffect(
+                            new PotionEffect(
+                                potionEffectConfig.getId(),
+                                potionEffectConfig.getDuration() * POTION_DURATION_MULTIPLIER,
+                                potionEffectConfig.getAmplifier()
+                            ));
+                }
+            }
+        }
+        
         this.onFoodEaten(itemStack, world, player);
         return itemStack;
     }
