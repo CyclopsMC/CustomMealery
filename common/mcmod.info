@@ -1,0 +1,23 @@
+[
+{
+  "modid": "custommealery",
+  "name": "Custom Mealery",
+  "description": "Configure your own foods.",
+  "version": "@VERSION@",
+  "mcversion": "@MC_VERSION@",
+  "credits": "TODO",
+  "logoFile": "/mods/evilcraft/textures/logo.png",
+  "url": "https://github.com/rubensworks/CustomMealery",
+  "updateUrl": "",
+  "authors": [
+  	"rubensworks (aka kroeserr)"
+  ],
+  "credits": ".",
+  "parent":"",
+  "screenshots": [],
+  "dependencies": [
+     "MinecraftForge"
+  ],
+  "useDependencyInformation": "true"
+}
+]
