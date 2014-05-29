@@ -4,12 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.Resource;
 import net.minecraft.client.resources.ResourceManager;
-import net.minecraft.client.resources.data.MetadataSection;
+import net.minecraft.client.resources.SimpleResource;
+import net.minecraft.client.resources.data.AnimationMetadataSection;
+import net.minecraft.client.resources.data.AnimationMetadataSectionSerializer;
+import net.minecraft.client.resources.data.FontMetadataSection;
+import net.minecraft.client.resources.data.FontMetadataSectionSerializer;
+import net.minecraft.client.resources.data.MetadataSerializer;
+import net.minecraft.client.resources.data.TextureMetadataSection;
+import net.minecraft.client.resources.data.TextureMetadataSectionSerializer;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -21,7 +27,10 @@ import net.minecraft.util.ResourceLocation;
  */
 public class ExternalTextureAtlasSprite extends TextureAtlasSprite {
     
+    private static final String META_SUFFIX = ".mcmeta";
+    
     private String iconPath;
+    private MetadataSerializer metadataSerializer;
 
     /**
      * Make a new instance.
@@ -32,6 +41,12 @@ public class ExternalTextureAtlasSprite extends TextureAtlasSprite {
         this(innerSprite.getIconName());
         copyFrom(innerSprite);
         this.iconPath = iconPath;
+        
+        // Some of the metadata section types as defined in Minecraft.java
+        this.metadataSerializer = new MetadataSerializer();
+        this.metadataSerializer.registerMetadataSectionType(new TextureMetadataSectionSerializer(), TextureMetadataSection.class);
+        this.metadataSerializer.registerMetadataSectionType(new FontMetadataSectionSerializer(), FontMetadataSection.class);
+        this.metadataSerializer.registerMetadataSectionType(new AnimationMetadataSectionSerializer(), AnimationMetadataSection.class);
     }
     
     protected ExternalTextureAtlasSprite(String iconName) {
@@ -39,34 +54,21 @@ public class ExternalTextureAtlasSprite extends TextureAtlasSprite {
     }
     
     @Override
-    public void loadSprite(Resource resource) throws IOException {
-        super.loadSprite(new Resource() {
-            
-            @Override
-            public boolean hasMetadata() {
-                return false;
-            }
-            
-            @Override
-            public MetadataSection getMetadata(String s) {
-                return null;
-            }
-            
-            @Override
-            public InputStream getInputStream() {
-                try {
-                    return new FileInputStream(new File(iconPath));
-                } catch (FileNotFoundException e) {
-                    return null;
-                }
-            }
-        });
+    public boolean load(ResourceManager manager, ResourceLocation location) throws IOException {
+        Resource resource = new SimpleResource(location, pathToFileInputStream(iconPath),
+                pathToFileInputStream(iconPath + META_SUFFIX), metadataSerializer);
+        super.loadSprite(resource);
+        return true;
     }
     
-    @Override
-    public boolean load(ResourceManager manager, ResourceLocation location) throws IOException {
-        loadSprite(null);
-        return true;
+    private static final FileInputStream pathToFileInputStream(String path) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(new File(path));
+        } catch (FileNotFoundException e) {
+            
+        }
+        return fis;
     }
 
 }
