@@ -5,15 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
+
+import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.rubensworks.custommealery.CustomMealery;
+import com.rubensworks.custommealery.Reference;
 
 /**
  * Loads the config files.
@@ -23,6 +27,8 @@ import com.rubensworks.custommealery.CustomMealery;
 public class ConfigLoader {
     
     private static final String TEMPLATE_NAME = "_template.json";
+    private static final String RESOURCES_TEMPLATE_PATH = "/assets/" + Reference.MOD_ID
+            + "/" + TEMPLATE_NAME;
     private static final Pattern CONFIG_PATTERN = Pattern.compile("^[^_].*\\.json");
 
     private static ConfigLoader _instance = null;
@@ -58,8 +64,14 @@ public class ConfigLoader {
         // Make template if not exists.
         File template = new File(configDirectory, TEMPLATE_NAME);
         if(!template.exists()) {
-            template.createNewFile();
-            // TODO: place some info in this.
+            try {
+                File resourcesTemplate = new File(this.getClass()
+                        .getResource(RESOURCES_TEMPLATE_PATH).toURI());
+                FileUtils.copyFile(resourcesTemplate, template);
+            } catch (URISyntaxException e) {
+                // Impossible!
+            }
+            
         }
         
         return rootFolder;
@@ -87,7 +99,6 @@ public class ConfigLoader {
      */
     public List<MealConfig> findMeals(File rootFolder, File currentFolder) {
         List<MealConfig> configs = Lists.newLinkedList();
-        
         for(File file : currentFolder.listFiles()) {
             if(file.isFile() && CONFIG_PATTERN.matcher(file.getName()).matches()) {
                 try {

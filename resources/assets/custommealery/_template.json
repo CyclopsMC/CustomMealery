@@ -1,0 +1,40 @@
+{
+    id: 590,
+    nameid: "shinyBread",
+    name: "Shiny Bread",
+    
+    eatTime: 12,
+    healAmount: 2,
+    saturationModifier: 0.3,
+    
+    isWolfsFavoriteMeat: false,
+    rarity: "epic",
+    hasEffect: true,
+    
+    isAlwaysEdible: true,
+    maxStackSize: 16,
+    
+    potionEffects: 
+    [
+        {
+            potionid: 1,
+            probability: 1.0,
+            duration: 3,
+            amplifier: 2
+        },
+        
+        {
+            potionid: 2,
+            probability: 1.0,
+            duration: 5,
+            amplifier: 2
+        }
+    ]
+    
+    recipe:
+    [
+        "264,264,264",
+        "264,3,264",
+        "264,264,264"
+    ]
+}

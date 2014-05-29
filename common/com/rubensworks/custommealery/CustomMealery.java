@@ -68,6 +68,7 @@ public class CustomMealery {
         } catch (IOException e) {
             log("Something went wrong while trying to initialize config folder and template, "
                     + "no meals were registered.", Level.SEVERE);
+            System.err.println(e);
         }        
     }
     
