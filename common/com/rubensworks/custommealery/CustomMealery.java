@@ -1,7 +1,12 @@
 package com.rubensworks.custommealery;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 
+import com.rubensworks.custommealery.config.ConfigLoader;
+import com.rubensworks.custommealery.config.MealConfig;
 import com.rubensworks.custommealery.proxy.CommonProxy;
 
 import cpw.mods.fml.common.Mod;
@@ -50,6 +55,17 @@ public class CustomMealery {
         // Save this instance, so we can use it later
         CustomMealery._instance = this;
         
+        // Init the config directory.
+        File rootFolder = null;
+        try {
+            rootFolder = ConfigLoader.getInstance().init(event.getModConfigurationDirectory()
+                    + "/" + Reference.MOD_ID);
+            List<MealConfig> configs = ConfigLoader.getInstance().findMeals(rootFolder);
+            MealRegistry.registerAll(configs);
+        } catch (IOException e) {
+            log("Something went wrong while trying to initialize config folder and template, "
+                    + "no meals were registered.", Level.SEVERE);
+        }        
     }
     
     /**
