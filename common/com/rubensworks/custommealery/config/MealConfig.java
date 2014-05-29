@@ -53,6 +53,9 @@ public class MealConfig {
     
     @SerializedName("potionEffects")
     private List<PotionEffectConfig> potionEffects = Lists.newLinkedList();
+    
+    @SerializedName("recipe")
+    private String[] recipeLines = null;
 
     /**
      * @return the id
@@ -157,6 +160,13 @@ public class MealConfig {
      */
     public int getMaxStackSize() {
         return maxStackSize;
+    }
+
+    /**
+     * @return the recipeLines
+     */
+    public String[] getRecipeLines() {
+        return recipeLines;
     }
     
 }
