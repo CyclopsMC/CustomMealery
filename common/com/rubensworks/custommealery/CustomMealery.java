@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import com.rubensworks.custommealery.config.ConfigLoader;
 import com.rubensworks.custommealery.config.MealConfig;
 import com.rubensworks.custommealery.proxy.CommonProxy;
@@ -58,8 +60,9 @@ public class CustomMealery {
         // Init the config directory.
         File rootFolder = null;
         try {
-            rootFolder = ConfigLoader.getInstance().init(event.getModConfigurationDirectory()
-                    + "/" + Reference.MOD_ID);
+            String rootFolderName = event.getModConfigurationDirectory()
+                    + "/" + Reference.MOD_ID;
+            rootFolder = ConfigLoader.getInstance().init(rootFolderName);
             List<MealConfig> configs = ConfigLoader.getInstance().findMeals(rootFolder);
             MealRegistry.registerAll(configs);
         } catch (IOException e) {
@@ -84,6 +87,8 @@ public class CustomMealery {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         LoggerHelper.log(Level.INFO, "postInit()");
+        
+        MinecraftForge.EVENT_BUS.register(proxy);
     }
     
     /**

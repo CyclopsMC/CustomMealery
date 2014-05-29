@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 import com.rubensworks.custommealery.Reference;
@@ -75,8 +76,24 @@ public class Meal extends ItemFood {
     @Override
     public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
         --itemStack.stackSize;
+        // TODO: potion effects
         this.onFoodEaten(itemStack, world, player);
         return itemStack;
+    }
+
+    /**
+     * @return the config
+     */
+    public MealConfig getConfig() {
+        return config;
+    }
+    
+    /**
+     * Set a new icon.
+     * @param icon The new icon.
+     */
+    public void setIcon(Icon icon) {
+        itemIcon = icon;
     }
     
 }

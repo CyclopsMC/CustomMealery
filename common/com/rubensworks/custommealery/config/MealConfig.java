@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class MealConfig {
+    
+    private static final String EXTENSION = ".png";
 
     @SerializedName("id")
     private int id;
@@ -19,6 +21,8 @@ public class MealConfig {
     
     @SerializedName("name")
     private String name;
+    
+    private String configLocation;
     
     @SerializedName("eatTime")
     private int itemUseDuration = 32;
@@ -99,6 +103,27 @@ public class MealConfig {
      */
     public boolean isWolfsFavoriteMeat() {
         return isWolfsFavoriteMeat;
+    }
+
+    /**
+     * @return the iconPath
+     */
+    public String getIconPath() {
+        return getConfigLocation() + "/" + getNameId() + EXTENSION;
+    }
+
+    /**
+     * @return the configLocation
+     */
+    public String getConfigLocation() {
+        return configLocation;
+    }
+
+    /**
+     * @param configLocation the configLocation to set
+     */
+    public void setConfigLocation(String configLocation) {
+        this.configLocation = configLocation;
     }
     
 }

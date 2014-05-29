@@ -65,6 +65,7 @@ public class ConfigLoader {
         return rootFolder;
     }
     
+    
     /**
      * Loop through the config folder to find all the meal configs.
      * Note that this will ignore all files with an underscore as prefix and
@@ -73,13 +74,29 @@ public class ConfigLoader {
      * @return The list of meal configs.
      */
     public List<MealConfig> findMeals(File rootFolder) {
+        return findMeals(rootFolder, rootFolder);
+    }
+    
+    /**
+     * Loop through the config folder to find all the meal configs.
+     * Note that this will ignore all files with an underscore as prefix and
+     * files without a ".json" prefix.
+     * @param rootFolder The root folder that will contain all the meal config files.
+     * @param currentFolder The currently browsing folder.
+     * @return The list of meal configs.
+     */
+    public List<MealConfig> findMeals(File rootFolder, File currentFolder) {
         List<MealConfig> configs = Lists.newLinkedList();
         
-        for(File file : rootFolder.listFiles()) {
+        for(File file : currentFolder.listFiles()) {
             if(file.isFile() && CONFIG_PATTERN.matcher(file.getName()).matches()) {
                 try {
-                    configs.add(loadMeal(file));
-                    CustomMealery.log("Loaded config " + file.getName() + ".", Level.FINE);
+                    MealConfig config = loadMeal(file);
+                    String relativePath = currentFolder.getAbsolutePath()
+                            .replaceAll(rootFolder.getAbsolutePath(), "");
+                    config.setConfigLocation(currentFolder.getAbsolutePath());
+                    configs.add(config);
+                    CustomMealery.log("Loaded config " + relativePath + file.getName() + ".", Level.FINE);
                 } catch (JsonSyntaxException e) {
                     CustomMealery.log("The config " + file.getName() + " has an invalid syntax.", Level.SEVERE);
                 } catch (JsonIOException e) {
