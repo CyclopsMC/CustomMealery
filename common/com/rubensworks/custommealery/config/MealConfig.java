@@ -36,6 +36,9 @@ public class MealConfig {
     @SerializedName("saturationModifier")
     private float saturationModifier = 1.0F;
     
+    @SerializedName("isAlwaysEdible")
+    private boolean isAlwaysEdible = false;
+    
     @SerializedName("isWolfsFavoriteMeat")
     private boolean isWolfsFavoriteMeat = false;
     
@@ -44,6 +47,9 @@ public class MealConfig {
     
     @SerializedName("hasEffect")
     private boolean hasEffect = false;
+    
+    @SerializedName("maxStackSize")
+    private int maxStackSize = 64;
     
     @SerializedName("potionEffects")
     private List<PotionEffectConfig> potionEffects = Lists.newLinkedList();
@@ -137,6 +143,20 @@ public class MealConfig {
      */
     public List<PotionEffectConfig> getPotionEffects() {
         return potionEffects;
+    }
+
+    /**
+     * @return the isAlwaysEdible
+     */
+    public boolean isAlwaysEdible() {
+        return isAlwaysEdible;
+    }
+
+    /**
+     * @return the maxStackSize
+     */
+    public int getMaxStackSize() {
+        return maxStackSize;
     }
     
 }

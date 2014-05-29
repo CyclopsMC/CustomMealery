@@ -29,8 +29,15 @@ public class Meal extends ItemFood {
 
     protected Meal(MealConfig config, int id, int healAmount, float saturationModifier, boolean isWolfsFavoriteMeat) {
         super(id, healAmount, saturationModifier, isWolfsFavoriteMeat);
+        
         this.config = config;
         this.setUnlocalizedName(this.getUniqueName());
+        
+        if(config.isAlwaysEdible()) {
+            setAlwaysEdible();
+        }
+        
+        this.maxStackSize = config.getMaxStackSize();
     }
     
     /**
@@ -79,8 +86,6 @@ public class Meal extends ItemFood {
     
     @Override
     public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
-        --itemStack.stackSize;
-        
         // Apply potion effects
         if(!world.isRemote) {
             for(PotionEffectConfig potionEffectConfig : config.getPotionEffects()) {
@@ -96,7 +101,7 @@ public class Meal extends ItemFood {
             }
         }
         
-        this.onFoodEaten(itemStack, world, player);
+        super.onEaten(itemStack, world, player);
         return itemStack;
     }
 
