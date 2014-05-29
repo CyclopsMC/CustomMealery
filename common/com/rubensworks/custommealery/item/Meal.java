@@ -64,7 +64,7 @@ public class Meal extends ItemFood {
     @Override
     @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack itemStack){
-        return EnumRarity.valueOf(config.getRarity());
+        return config.getRarity();
     }
     
     @Override

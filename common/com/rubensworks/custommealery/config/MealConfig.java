@@ -1,5 +1,7 @@
 package com.rubensworks.custommealery.config;
 
+import net.minecraft.item.EnumRarity;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -18,17 +20,23 @@ public class MealConfig {
     @SerializedName("name")
     private String name;
     
+    @SerializedName("eatTime")
     private int itemUseDuration = 32;
     
+    @SerializedName("healAmount")
     private int healAmount = 2;
     
+    @SerializedName("saturationModifier")
     private float saturationModifier = 1.0F;
     
-    private boolean isWolfsFavoriteMeat = true;
+    @SerializedName("isWolfsFavoriteMeat")
+    private boolean isWolfsFavoriteMeat = false;
     
-    private String rarity = "epic";
+    @SerializedName("rarity")
+    private EnumRarity rarity = EnumRarity.common;
     
-    private boolean hasEffect = true;
+    @SerializedName("hasEffect")
+    private boolean hasEffect = false;
 
     /**
      * @return the id
@@ -54,7 +62,7 @@ public class MealConfig {
     /**
      * @return the rarity
      */
-    public String getRarity() {
+    public EnumRarity getRarity() {
         return rarity;
     }
 
