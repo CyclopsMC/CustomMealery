@@ -69,7 +69,7 @@
 		<antcall target="recompile" />		
 		<antcall target="reobfuscate" />
 		<antcall target="jarify" />
-		<!-- <antcall target="clean" />  -->
+		<antcall target="clean" />
 	</target>
 	
 	<target name="release">

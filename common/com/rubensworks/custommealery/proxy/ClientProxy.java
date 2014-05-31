@@ -85,12 +85,16 @@ public class ClientProxy extends CommonProxy{
     public void textureHook(TextureStitchEvent.Pre event) throws IOException {
         if(event.map.textureType == ITEM_TEXTURE_TYPE) {
             for(Meal meal : MealRegistry.REGISTERED_MEALS) {
-                TextureAtlasSprite oldSprite = event.map.getTextureExtry(meal.getIconString());
-                Map<String, TextureAtlasSprite> spritesMap = getRegisteredSpritesMap(event.map);
-                ExternalTextureAtlasSprite newSprite = new ExternalTextureAtlasSprite(oldSprite,
-                        meal.getConfig().getIconPath());
-                spritesMap.put(meal.getIconString(), newSprite);
-                meal.setIcon(newSprite);
+                // Only load icons from the meals that don't already have a
+                // texture from a texture pack.
+                if(!meal.getConfig().hasResourceTexture()) {
+                    TextureAtlasSprite oldSprite = event.map.getTextureExtry(meal.getIconString());
+                    Map<String, TextureAtlasSprite> spritesMap = getRegisteredSpritesMap(event.map);
+                    ExternalTextureAtlasSprite newSprite = new ExternalTextureAtlasSprite(oldSprite,
+                            meal.getConfig().getIconPath());
+                    spritesMap.put(meal.getIconString(), newSprite);
+                    meal.setIcon(newSprite);
+                }
             }
         }
     }

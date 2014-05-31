@@ -25,6 +25,9 @@ public class MealConfig {
     @SerializedName("name")
     private String name;
     
+    @SerializedName("texture")
+    private String texture = null;
+    
     private String configLocation;
     
     @SerializedName("eatTime")
@@ -167,6 +170,21 @@ public class MealConfig {
      */
     public String[] getRecipeLines() {
         return recipeLines;
+    }
+
+    /**
+     * @return the texture
+     */
+    public String getTexture() {
+        return texture;
+    }
+    
+    /**
+     * If this meal has a texture in a resource pack instead of in the config directory.
+     * @return If it has one.
+     */
+    public boolean hasResourceTexture() {
+        return getTexture() != null;
     }
     
 }

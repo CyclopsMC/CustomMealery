@@ -64,6 +64,9 @@ public class Meal extends ItemFood {
     
     @Override
     public String getIconString() {
+        if(config.hasResourceTexture()) {
+            return config.getTexture();
+        }
         return Reference.MOD_ID + ":" + config.getNameId();
     }
     
