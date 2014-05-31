@@ -9,7 +9,7 @@
 	
 	<target name="clean">
 		<delete file="${forge.dir}/mcp/src/minecraft/mcmod.info" />
-		<delete dir="${forge.dir}/mcp/src/minecraft/evilcraft" />
+		<delete dir="${forge.dir}/mcp/src/minecraft/custommealery" />
 		<delete dir="${forge.dir}/mcp/reobf/minecraft" />
 	</target>
 	
@@ -20,7 +20,7 @@
 	</target>
 	
 	<target name="prep">
-		<copy todir="${forge.dir}/mcp/src/minecraft/evilcraft">
+		<copy todir="${forge.dir}/mcp/src/minecraft/custommealery">
 			<fileset dir="${project.dir}/common" />
 		</copy>
 	</target>
@@ -54,9 +54,9 @@
 	<target name="jarify">
 		<!-- Build the jar -->
 		<mkdir dir="${build.dir.release}/${build.release.minecraft.version}/${build.release.mod.version}" />
-		<jar destfile="${build.dir.release}/${build.release.minecraft.version}/${build.release.mod.version}/EvilCraft-${build.release.minecraft.version}-${build.release.mod.version}-${build_number.build_number}.jar">
-			<fileset dir="${forge.dir}/mcp/src/minecraft/evilcraft" includes="mcmod.info" />
-			<fileset dir="${forge.dir}/mcp/reobf/minecraft" />
+		<jar destfile="${build.dir.release}/${build.release.minecraft.version}/${build.release.mod.version}/CustomMealery-${build.release.minecraft.version}-${build.release.mod.version}-${build_number.build_number}.jar">
+			<fileset dir="${forge.dir}/mcp/src/minecraft/custommealery" includes="mcmod.info" />
+			<fileset dir="${forge.dir}/mcp/reobf/minecraft" includes="${build.dir.modgroup}/" />
 			<fileset dir="${project.dir}/resources" excludes="**/psd/**" />
 		</jar>
 	</target>
@@ -69,7 +69,7 @@
 		<antcall target="recompile" />		
 		<antcall target="reobfuscate" />
 		<antcall target="jarify" />
-		<antcall target="clean" />
+		<!-- <antcall target="clean" />  -->
 	</target>
 	
 	<target name="release">
