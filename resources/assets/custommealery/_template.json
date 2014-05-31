@@ -2,7 +2,7 @@
     id: 590,
     nameid: "shinyBread",
     name: "Shiny Bread",
-    
+    texture: "minecraft:diamond",
     eatTime: 12,
     healAmount: 2,
     saturationModifier: 0.3,
@@ -31,6 +31,7 @@
         }
     ]
     
+    recipeResultAmount: 4,
     recipe:
     [
         "264,264,264",
