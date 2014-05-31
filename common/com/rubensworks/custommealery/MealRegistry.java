@@ -74,12 +74,15 @@ public final class MealRegistry {
             String parameterLine = "";
             String[] elements = line.split(",");
             for(String element : elements) {
-                //int id = Integer.parseInt(element);
-                if(!parameters.containsKey(element)) {
-                    parameters.put(element, parameterCounter++);
+                if(" ".equals(element)) {
+                    parameterLine += " ";
+                } else {
+                    if(!parameters.containsKey(element)) {
+                        parameters.put(element, parameterCounter++);
+                    }
+                    char parameter = parameters.get(element);
+                    parameterLine += parameter;
                 }
-                char parameter = parameters.get(element);
-                parameterLine += parameter;
             }
             lines.add(parameterLine);
         }

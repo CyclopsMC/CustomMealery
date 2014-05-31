@@ -13,13 +13,13 @@ public class PotionEffectConfig {
     private int id;
     
     @SerializedName("probability")
-    private float probability;
+    private float probability = 1.0F;
     
     @SerializedName("duration")
     private int duration;
     
     @SerializedName("amplifier")
-    private int amplifier;
+    private int amplifier = 1;
 
     /**
      * @return the id
