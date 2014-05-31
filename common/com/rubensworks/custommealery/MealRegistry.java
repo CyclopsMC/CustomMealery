@@ -3,6 +3,7 @@ package com.rubensworks.custommealery;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -63,7 +64,9 @@ public final class MealRegistry {
         Map<String, Character> parameters = Maps.newHashMap(); // key to char
         
         if(config.getRecipeLines().length != 3) {
-            throw new RuntimeException("The config for " + config.getName() + " has an invalid recipe structure.");
+            CustomMealery.log("The config for " + config.getName()
+                    + " has an invalid recipe structure, skipping.", Level.SEVERE);
+            return;
         }
         
         // Add the three recipe box lines.
@@ -84,7 +87,13 @@ public final class MealRegistry {
         // Add the pairs of character key and item id.
         for(Entry<String, Character> entry : parameters.entrySet()) {
             lines.add(entry.getValue());
-            lines.add(makeItemStack(entry.getKey()));
+            Object line = makeItemStack(entry.getKey());
+            if(line == null) {
+                CustomMealery.log("The recipe for " + config.getName()
+                        + " has an invalid structure, skipping.", Level.SEVERE);
+                return;
+            }
+            lines.add(line);
         }
         
         // Register with the recipe lines we just constructed.
@@ -95,9 +104,13 @@ public final class MealRegistry {
         if(key.contains(":")) {
             // There is a meta value
             String[] elements = key.split(":");
-            int id = Integer.parseInt(elements[0]);
-            int meta = Integer.parseInt(elements[1]);
-            return new ItemStack(Item.itemsList[id], 1, meta);
+            try {
+                int id = Integer.parseInt(elements[0]);
+                int meta = Integer.parseInt(elements[1]);
+                return new ItemStack(Item.itemsList[id], 1, meta);
+            } catch (NumberFormatException e) {
+                return null;
+            }
         } else {
             try {
                 // There is just an id

@@ -110,8 +110,10 @@ public class ConfigLoader {
                     CustomMealery.log("Loaded config " + relativePath + file.getName() + ".", Level.FINE);
                 } catch (JsonSyntaxException e) {
                     CustomMealery.log("The config " + file.getName() + " has an invalid syntax.", Level.SEVERE);
+                    System.err.println(e);
                 } catch (JsonIOException e) {
                     CustomMealery.log("Something went wrong while reading " + file.getName() + ".", Level.SEVERE);
+                    System.err.println(e);
                 }
             } else if(file.isDirectory()) {
                 configs.addAll(findMeals(file));
