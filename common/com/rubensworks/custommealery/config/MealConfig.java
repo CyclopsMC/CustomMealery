@@ -37,7 +37,7 @@ public class MealConfig {
     private int healAmount = 2;
     
     @SerializedName("saturationModifier")
-    private float saturationModifier = 1.0F;
+    private float saturationModifier = 0.5F;
     
     @SerializedName("isAlwaysEdible")
     private boolean isAlwaysEdible = false;
