@@ -60,7 +60,7 @@ public final class MealRegistry {
         // The recipe lines. These contain the three recipe box lines and the KV mapping
         // of character key as used in the recipe lines and the item ID.
         List<Object> lines = Lists.newLinkedList();
-        Map<Integer, Character> parameters = Maps.newHashMap(); // ID to char
+        Map<String, Character> parameters = Maps.newHashMap(); // key to char
         
         if(config.getRecipeLines().length != 3) {
             throw new RuntimeException("The config for " + config.getName() + " has an invalid recipe structure.");
@@ -71,24 +71,43 @@ public final class MealRegistry {
             String parameterLine = "";
             String[] elements = line.split(",");
             for(String element : elements) {
-                int id = Integer.parseInt(element);
-                if(!parameters.containsKey(id)) {
-                    parameters.put(id, parameterCounter++);
+                //int id = Integer.parseInt(element);
+                if(!parameters.containsKey(element)) {
+                    parameters.put(element, parameterCounter++);
                 }
-                char parameter = parameters.get(id);
+                char parameter = parameters.get(element);
                 parameterLine += parameter;
             }
             lines.add(parameterLine);
         }
         
         // Add the pairs of character key and item id.
-        for(Entry<Integer, Character> entry : parameters.entrySet()) {
+        for(Entry<String, Character> entry : parameters.entrySet()) {
             lines.add(entry.getValue());
-            lines.add(new ItemStack(Item.itemsList[entry.getKey()]));
+            lines.add(makeItemStack(entry.getKey()));
         }
         
         // Register with the recipe lines we just constructed.
         GameRegistry.addRecipe(new ShapedOreRecipe(item, true, lines.toArray()));
+    }
+
+    private static Object makeItemStack(String key) {
+        if(key.contains(":")) {
+            // There is a meta value
+            String[] elements = key.split(":");
+            int id = Integer.parseInt(elements[0]);
+            int meta = Integer.parseInt(elements[1]);
+            return new ItemStack(Item.itemsList[id], 1, meta);
+        } else {
+            try {
+                // There is just an id
+                int id = Integer.parseInt(key);
+                return new ItemStack(Item.itemsList[id]);
+            } catch (NumberFormatException e) {
+                // Assume an ore dict key
+                return key;
+            }
+        }
     }
     
 }
