@@ -88,7 +88,7 @@ public final class MealRegistry {
         }
         
         // Register with the recipe lines we just constructed.
-        GameRegistry.addRecipe(new ShapedOreRecipe(item, true, lines.toArray()));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(item, config.getRecipeResultAmount()), true, lines.toArray()));
     }
 
     private static Object makeItemStack(String key) {

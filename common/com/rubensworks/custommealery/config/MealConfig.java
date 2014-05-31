@@ -57,6 +57,9 @@ public class MealConfig {
     @SerializedName("potionEffects")
     private List<PotionEffectConfig> potionEffects = Lists.newLinkedList();
     
+    @SerializedName("recipeResultAmount")
+    private int recipeResultAmount = 1;
+    
     @SerializedName("recipe")
     private String[] recipeLines = null;
 
@@ -185,6 +188,13 @@ public class MealConfig {
      */
     public boolean hasResourceTexture() {
         return getTexture() != null;
+    }
+
+    /**
+     * @return the recipeResultAmount
+     */
+    public int getRecipeResultAmount() {
+        return recipeResultAmount;
     }
     
 }
