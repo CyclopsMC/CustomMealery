@@ -82,12 +82,14 @@ public class CustomMealery {
     }
     
     /**
-     * Register the event hooks.
+     * Register the event hooks and recipes.
      * @param event The Forge event required for this.
      */
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         LoggerHelper.log(Level.INFO, "postInit()");
+        
+        MealRegistry.registerAllRecipes();
         
         MinecraftForge.EVENT_BUS.register(proxy);
     }

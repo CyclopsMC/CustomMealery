@@ -39,12 +39,7 @@ public final class MealRegistry {
     public static void register(MealConfig config) {
         Meal item = new Meal(config);
         GameRegistry.registerItem(item, config.getNameId());
-        if(config.hasCraftingRecipe()) {
-            addCraftingRecipe(item, config);
-        }
-        if(config.hasFurnaceRecipe()) {
-            addFurnaceRecipe(item, config);
-        }
+        
         item.setCreativeTab(CustomMealeryTab.getInstance());
         LanguageRegistry.addName(item, config.getName());
         REGISTERED_MEALS.add(item);
@@ -57,6 +52,23 @@ public final class MealRegistry {
     public static void registerAll(List<MealConfig> configs) {
         for(MealConfig config : configs) {
             register(config);
+        }
+    }
+    
+    /**
+     * Register the crafting and furnace recipes for the registered meals.
+     * Should only be called once after ALL meals have been registered at
+     * {@link MealRegistry#register(MealConfig)} or {@link MealRegistry#registerAll(List)}.
+     */
+    public static void registerAllRecipes() {
+        for(Meal meal : REGISTERED_MEALS) {
+            MealConfig config = meal.getConfig();
+            if(config.hasCraftingRecipe()) {
+                addCraftingRecipe(meal, config);
+            }
+            if(config.hasFurnaceRecipe()) {
+                addFurnaceRecipe(meal, config);
+            }
         }
     }
     
