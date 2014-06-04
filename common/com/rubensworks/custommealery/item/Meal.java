@@ -123,4 +123,12 @@ public class Meal extends ItemFood {
         itemIcon = icon;
     }
     
+    @Override
+    public int getColorFromItemStack(ItemStack itemStack, int meta) {
+        if(config.hasColorOverlay()) {
+            return config.getColor().toInt();
+        }
+        return super.getColorFromItemStack(itemStack, meta);
+    }
+    
 }

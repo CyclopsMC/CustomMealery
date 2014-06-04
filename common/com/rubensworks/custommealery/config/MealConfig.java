@@ -6,6 +6,7 @@ import net.minecraft.item.EnumRarity;
 
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
+import com.rubensworks.custommealery.Color;
 
 /**
  * Config file for a meal.
@@ -27,6 +28,9 @@ public class MealConfig {
     
     @SerializedName("texture")
     private String texture = null;
+    
+    @SerializedName("colorOverlay")
+    private Color color = null;
     
     private String configLocation;
     
@@ -195,6 +199,21 @@ public class MealConfig {
      */
     public int getRecipeResultAmount() {
         return recipeResultAmount;
+    }
+
+    /**
+     * @return the color
+     */
+    public Color getColor() {
+        return color;
+    }
+    
+    /**
+     * If this meal config should have a custom color overlay for the icon.
+     * @return If it has a texture color overlay.
+     */
+    public boolean hasColorOverlay() {
+        return getColor() != null;
     }
     
 }
