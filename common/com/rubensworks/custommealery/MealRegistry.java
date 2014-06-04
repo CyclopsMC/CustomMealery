@@ -11,6 +11,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rubensworks.custommealery.config.CraftingRecipe;
 import com.rubensworks.custommealery.config.MealConfig;
 import com.rubensworks.custommealery.item.Meal;
 
@@ -36,8 +37,8 @@ public final class MealRegistry {
     public static void register(MealConfig config) {
         Meal item = new Meal(config);
         GameRegistry.registerItem(item, config.getNameId());
-        if(config.getRecipeLines() != null) {
-            addRecipe(item, config);
+        if(config.hasCraftingRecipe()) {
+            addCraftingRecipe(item, config);
         }
         item.setCreativeTab(CustomMealeryTab.getInstance());
         LanguageRegistry.addName(item, config.getName());
@@ -54,7 +55,9 @@ public final class MealRegistry {
         }
     }
     
-    private static void addRecipe(Item item, MealConfig config) {
+    private static void addCraftingRecipe(Item item, MealConfig config) {
+        CraftingRecipe recipe = config.getCraftingRecipe();
+        
         // First valid character for recipes.
         char parameterCounter = 65;
         
@@ -63,14 +66,14 @@ public final class MealRegistry {
         List<Object> lines = Lists.newLinkedList();
         Map<String, Character> parameters = Maps.newHashMap(); // key to char
         
-        if(config.getRecipeLines().length != 3) {
+        if(recipe.getRecipeLines().length != 3) {
             CustomMealery.log("The config for " + config.getName()
                     + " has an invalid recipe structure, skipping.", Level.SEVERE);
             return;
         }
         
         // Add the three recipe box lines.
-        for(String line : config.getRecipeLines()) {
+        for(String line : recipe.getRecipeLines()) {
             String parameterLine = "";
             String[] elements = line.split(",");
             for(String element : elements) {
@@ -100,7 +103,7 @@ public final class MealRegistry {
         }
         
         // Register with the recipe lines we just constructed.
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(item, config.getRecipeResultAmount()), true, lines.toArray()));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(item, recipe.getRecipeResultAmount()), true, lines.toArray()));
     }
 
     private static Object makeItemStack(String key) {

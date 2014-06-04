@@ -61,11 +61,8 @@ public class MealConfig {
     @SerializedName("potionEffects")
     private List<PotionEffectConfig> potionEffects = Lists.newLinkedList();
     
-    @SerializedName("recipeResultAmount")
-    private int recipeResultAmount = 1;
-    
-    @SerializedName("recipe")
-    private String[] recipeLines = null;
+    @SerializedName("craftingRecipe")
+    private CraftingRecipe craftingRecipe = null;
 
     /**
      * @return the id
@@ -173,10 +170,18 @@ public class MealConfig {
     }
 
     /**
-     * @return the recipeLines
+     * @return the craftingRecipe
      */
-    public String[] getRecipeLines() {
-        return recipeLines;
+    public CraftingRecipe getCraftingRecipe() {
+        return craftingRecipe;
+    }
+    
+    /**
+     * If this meal has a crafting recipe.
+     * @return If it has one.
+     */
+    public boolean hasCraftingRecipe() {
+        return getCraftingRecipe() != null;
     }
 
     /**
@@ -192,13 +197,6 @@ public class MealConfig {
      */
     public boolean hasResourceTexture() {
         return getTexture() != null;
-    }
-
-    /**
-     * @return the recipeResultAmount
-     */
-    public int getRecipeResultAmount() {
-        return recipeResultAmount;
     }
 
     /**
