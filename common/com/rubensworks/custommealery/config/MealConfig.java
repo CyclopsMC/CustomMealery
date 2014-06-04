@@ -63,6 +63,9 @@ public class MealConfig {
     
     @SerializedName("craftingRecipe")
     private CraftingRecipe craftingRecipe = null;
+    
+    @SerializedName("furnaceRecipe")
+    private FurnaceRecipe furnaceRecipe = null;
 
     /**
      * @return the id
@@ -182,6 +185,21 @@ public class MealConfig {
      */
     public boolean hasCraftingRecipe() {
         return getCraftingRecipe() != null;
+    }
+    
+    /**
+     * @return the furnaceRecipe
+     */
+    public FurnaceRecipe getFurnaceRecipe() {
+        return furnaceRecipe;
+    }
+    
+    /**
+     * If this meal has a furnace recipe.
+     * @return If it has one.
+     */
+    public boolean hasFurnaceRecipe() {
+        return getFurnaceRecipe() != null;
     }
 
     /**

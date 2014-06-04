@@ -34,7 +34,7 @@
             duration: 5,
             amplifier: 2
         }
-    ]
+    ],
     
     craftingRecipe: {
         recipeResultAmount: 4,
@@ -45,4 +45,11 @@
             "264:1,264,264"
         ]
     },
+    
+    furnaceRecipe: {
+        recipeResultAmount: 4,
+        inputid: 264,
+        inputmeta: 1,
+        experience: 4
+    }
 }

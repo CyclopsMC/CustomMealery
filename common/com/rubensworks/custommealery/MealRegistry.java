@@ -7,11 +7,13 @@ import java.util.logging.Level;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rubensworks.custommealery.config.CraftingRecipe;
+import com.rubensworks.custommealery.config.FurnaceRecipe;
 import com.rubensworks.custommealery.config.MealConfig;
 import com.rubensworks.custommealery.item.Meal;
 
@@ -39,6 +41,9 @@ public final class MealRegistry {
         GameRegistry.registerItem(item, config.getNameId());
         if(config.hasCraftingRecipe()) {
             addCraftingRecipe(item, config);
+        }
+        if(config.hasFurnaceRecipe()) {
+            addFurnaceRecipe(item, config);
         }
         item.setCreativeTab(CustomMealeryTab.getInstance());
         LanguageRegistry.addName(item, config.getName());
@@ -126,6 +131,21 @@ public final class MealRegistry {
                 // Assume an ore dict key
                 return key;
             }
+        }
+    }
+    
+    private static void addFurnaceRecipe(Item item, MealConfig config) {
+        FurnaceRecipe recipe = config.getFurnaceRecipe();
+        
+        int inputID = recipe.getInputID();
+        ItemStack output = new ItemStack(item, recipe.getRecipeResultAmount());
+        int xp = recipe.getExperience();
+        
+        if(recipe.hasCustomMeta()) {
+            int inputMeta = recipe.getInputMeta();
+            FurnaceRecipes.smelting().addSmelting(inputID, inputMeta, output, xp);
+        } else {
+            FurnaceRecipes.smelting().addSmelting(inputID, output, xp);
         }
     }
     
