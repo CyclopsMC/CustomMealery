@@ -16,6 +16,7 @@ import com.rubensworks.custommealery.Color;
 public class MealConfig {
     
     private static final String EXTENSION = ".png";
+    private static final int DEFAULT_DAMAGE_VALUE = -1;
 
     @SerializedName("id")
     private int id;
@@ -57,6 +58,9 @@ public class MealConfig {
     
     @SerializedName("maxStackSize")
     private int maxStackSize = 64;
+    
+    @SerializedName("damageValue")
+    private int damageValue = DEFAULT_DAMAGE_VALUE;
     
     @SerializedName("potionEffects")
     private List<PotionEffectConfig> potionEffects = Lists.newLinkedList();
@@ -230,6 +234,21 @@ public class MealConfig {
      */
     public boolean hasColorOverlay() {
         return getColor() != null;
+    }
+
+    /**
+     * @return the damageValue
+     */
+    public int getDamageValue() {
+        return damageValue;
+    }
+    
+    /**
+     * If this meal should be based on damage values so that it can be eaten multiple times.
+     * @return If it has a damage value.
+     */
+    public boolean hasDamageValue() {
+        return getDamageValue() != DEFAULT_DAMAGE_VALUE;
     }
     
 }

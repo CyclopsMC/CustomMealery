@@ -37,7 +37,13 @@ public class Meal extends ItemFood {
             setAlwaysEdible();
         }
         
-        this.maxStackSize = config.getMaxStackSize();
+        if(config.hasDamageValue()) {
+            this.maxStackSize = 1;
+            setMaxDamage(config.getDamageValue());
+            setNoRepair();
+        } else {
+            this.maxStackSize = config.getMaxStackSize();
+        }
     }
     
     /**
@@ -104,7 +110,16 @@ public class Meal extends ItemFood {
             }
         }
         
-        super.onEaten(itemStack, world, player);
+        // This part is partially the same as it's parent.
+        if(config.hasDamageValue()) {
+            itemStack.damageItem(1, player);
+        } else {
+            --itemStack.stackSize;
+        }
+        player.getFoodStats().addStats(this);
+        world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+        this.onFoodEaten(itemStack, world, player);
+        
         return itemStack;
     }
 
