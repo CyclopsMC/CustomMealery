@@ -1,9 +1,12 @@
 # Custom Mealery
 
 A simple Minecraft mod that allows your to define and configure your own food and meals.
+Downloads available at [CurseForge](http://minecraft.curseforge.com/mc-mods/220864-custom-mealery)
 
 ## Usage
 A very simple mod that allows you to configure your own food and meals by just making a simple config file for them.
+
+Please refer to the wiki for more advanced config options and details about each one.
 
 When first starting the mod, a "_template.json" file will be created inside the "config/custommealery" folder. This will contain an example of all the possible configuration options for food, this file can be seen below.
 
