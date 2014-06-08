@@ -4,10 +4,11 @@
 # Also ignore build folder
 /build
 
-# Ignore eclipse specific files
+# Ignore eclipse and gradle specific files
 .classpath
 .project
 .settings
+.gradle
 
 # Ignore mac-specific file(s)
 .DS_Store
