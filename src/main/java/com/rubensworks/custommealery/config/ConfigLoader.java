@@ -7,10 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
@@ -107,18 +107,18 @@ public class ConfigLoader {
                             .replaceAll(rootFolder.getAbsolutePath(), "");
                     config.setConfigLocation(currentFolder.getAbsolutePath());
                     configs.add(config);
-                    CustomMealery.log("Loaded config " + relativePath + file.getName() + ".", Level.FINE);
+                    CustomMealery.log("Loaded config " + relativePath + file.getName() + ".", Level.INFO);
                 } catch (JsonSyntaxException e) {
-                    CustomMealery.log("The config " + file.getName() + " has an invalid syntax.", Level.SEVERE);
+                    CustomMealery.log("The config " + file.getName() + " has an invalid syntax.", Level.ERROR);
                     System.err.println(e);
                 } catch (JsonIOException e) {
-                    CustomMealery.log("Something went wrong while reading " + file.getName() + ".", Level.SEVERE);
+                    CustomMealery.log("Something went wrong while reading " + file.getName() + ".", Level.ERROR);
                     System.err.println(e);
                 }
             } else if(file.isDirectory()) {
                 configs.addAll(findMeals(file));
             } else {
-                CustomMealery.log("Skipped config " + file.getName() + ".", Level.FINE);
+                CustomMealery.log("Skipped config " + file.getName() + ".", Level.INFO);
             }
         }
         

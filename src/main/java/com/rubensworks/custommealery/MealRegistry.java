@@ -3,12 +3,13 @@ package com.rubensworks.custommealery;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -17,6 +18,7 @@ import com.rubensworks.custommealery.config.FurnaceRecipe;
 import com.rubensworks.custommealery.config.MealConfig;
 import com.rubensworks.custommealery.item.Meal;
 
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -85,7 +87,7 @@ public final class MealRegistry {
         
         if(recipe.getRecipeLines().length != 3) {
             CustomMealery.log("The config for " + config.getName()
-                    + " has an invalid recipe structure, skipping.", Level.SEVERE);
+                    + " has an invalid recipe structure, skipping.", Level.ERROR);
             return;
         }
         
@@ -113,7 +115,7 @@ public final class MealRegistry {
             Object line = makeItemStack(entry.getKey());
             if(line == null) {
                 CustomMealery.log("The recipe for " + config.getName()
-                        + " has an invalid structure, skipping.", Level.SEVERE);
+                        + " has an invalid structure, skipping.", Level.ERROR);
                 return;
             }
             lines.add(line);
@@ -122,43 +124,59 @@ public final class MealRegistry {
         // Register with the recipe lines we just constructed.
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(item, recipe.getRecipeResultAmount()), true, lines.toArray()));
     }
-
+    
+    private static String collapseRange(String[] elements, int lastIndex) {
+    	String result = "";
+    	for(int i = 0; i < lastIndex; i++) {
+    		if(i > 0) {
+    			result += ":";
+    		}
+    		result += elements[i];
+    	}
+    	return result;
+    }
+    
     private static Object makeItemStack(String key) {
         if(key.contains(":")) {
             // There is a meta value
             String[] elements = key.split(":");
             try {
-                int id = Integer.parseInt(elements[0]);
-                int meta = Integer.parseInt(elements[1]);
-                return new ItemStack(Item.itemsList[id], 1, meta);
+                String nameid = collapseRange(elements, elements.length - 1);
+                int meta = Integer.parseInt(elements[elements.length - 1]);
+                if(GameData.getItemRegistry().containsKey(nameid)) {
+                	return new ItemStack(GameData.getItemRegistry().getObject(nameid), 1, meta);
+                }
             } catch (NumberFormatException e) {
-                return null;
-            }
-        } else {
-            try {
-                // There is just an id
-                int id = Integer.parseInt(key);
-                return new ItemStack(Item.itemsList[id]);
-            } catch (NumberFormatException e) {
-                // Assume an ore dict key
-                return key;
+                
             }
         }
+        
+        // There is just an id
+        String nameid = key;
+        if(!GameData.getItemRegistry().containsKey(nameid)) {
+        	// Assume an ore dict key
+        	return key;
+        }
+        return new ItemStack(GameData.getItemRegistry().getObject(nameid));
     }
     
     private static void addFurnaceRecipe(Item item, MealConfig config) {
         FurnaceRecipe recipe = config.getFurnaceRecipe();
         
-        int inputID = recipe.getInputID();
+        String inputnameid = recipe.getInputNameID();
+        Item inputItem = GameData.getItemRegistry().getObject(inputnameid);
+        ItemStack inputItemStack = null;
         ItemStack output = new ItemStack(item, recipe.getRecipeResultAmount());
         int xp = recipe.getExperience();
         
         if(recipe.hasCustomMeta()) {
             int inputMeta = recipe.getInputMeta();
-            FurnaceRecipes.smelting().addSmelting(inputID, inputMeta, output, xp);
+            inputItemStack = new ItemStack(inputItem, 1, inputMeta);
         } else {
-            FurnaceRecipes.smelting().addSmelting(inputID, output, xp);
+        	inputItemStack = new ItemStack(inputItem, 1);
         }
+
+        FurnaceRecipes.smelting().func_151394_a(inputItemStack, output, xp);
     }
     
 }

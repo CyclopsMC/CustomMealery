@@ -9,11 +9,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.event.ForgeSubscribe;
 
 import com.rubensworks.custommealery.MealRegistry;
 import com.rubensworks.custommealery.client.ExternalTextureAtlasSprite;
 import com.rubensworks.custommealery.item.Meal;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 /**
@@ -81,9 +84,10 @@ public class ClientProxy extends CommonProxy{
      * @param event The pre-{@link TextureStitchEvent}.
      * @throws IOException If an error occured.
      */
-    @ForgeSubscribe
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void textureHook(TextureStitchEvent.Pre event) throws IOException {
-        if(event.map.textureType == ITEM_TEXTURE_TYPE) {
+        if(event.map.getTextureType() == ITEM_TEXTURE_TYPE) {
             for(Meal meal : MealRegistry.REGISTERED_MEALS) {
                 // Only load icons from the meals that don't already have a
                 // texture from a texture pack.

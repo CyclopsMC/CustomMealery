@@ -17,9 +17,6 @@ public class MealConfig {
     
     private static final String EXTENSION = ".png";
     private static final int DEFAULT_DAMAGE_VALUE = -1;
-
-    @SerializedName("id")
-    private int id;
     
     @SerializedName("nameid")
     private String nameId;
@@ -70,13 +67,6 @@ public class MealConfig {
     
     @SerializedName("furnaceRecipe")
     private FurnaceRecipe furnaceRecipe = null;
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
 
     /**
      * @return the nameid

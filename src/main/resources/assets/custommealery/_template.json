@@ -1,5 +1,4 @@
 {
-    id: 590,
     nameid: "shinyBread",
     name: "Shiny Bread",
     texture: "minecraft:diamond",
@@ -41,14 +40,14 @@
         recipe:
         [
             " , , ",
-            "264,3,plankWood",
-            "264:1,264,264"
+            "apple,diamond,plankWood",
+            "diamond:1,apple,someMod:someItem:6"
         ]
     },
     
     furnaceRecipe: {
         recipeResultAmount: 4,
-        inputid: 264,
+        inputnameid: "apple",
         inputmeta: 1,
         experience: 4
     }

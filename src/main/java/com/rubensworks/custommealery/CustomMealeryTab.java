@@ -1,6 +1,7 @@
 package com.rubensworks.custommealery;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -30,8 +31,8 @@ public class CustomMealeryTab extends CreativeTabs{
     }
     
     @Override
-    public int getTabIconItemIndex() {
-        return Item.cookie.itemID;
+    public Item getTabIconItem() {
+        return Items.cookie;
     }
     
 }

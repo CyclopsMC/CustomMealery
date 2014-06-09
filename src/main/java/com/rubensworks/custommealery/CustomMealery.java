@@ -3,9 +3,10 @@ package com.rubensworks.custommealery;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 
 import net.minecraftforge.common.MinecraftForge;
+
+import org.apache.logging.log4j.Level;
 
 import com.rubensworks.custommealery.config.ConfigLoader;
 import com.rubensworks.custommealery.config.MealConfig;
@@ -17,7 +18,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 
 /**
  * The main mod class of Custom Mealery.
@@ -29,7 +29,6 @@ import cpw.mods.fml.common.network.NetworkMod;
     useMetadata = true,
     version = Reference.MOD_VERSION
     )
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class CustomMealery {
     
     /**
@@ -67,7 +66,7 @@ public class CustomMealery {
             MealRegistry.registerAll(configs);
         } catch (IOException e) {
             log("Something went wrong while trying to initialize config folder and template, "
-                    + "no meals were registered.", Level.SEVERE);
+                    + "no meals were registered.", Level.ERROR);
             System.err.println(e);
         }        
     }

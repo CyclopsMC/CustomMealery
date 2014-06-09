@@ -1,12 +1,12 @@
 package com.rubensworks.custommealery.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import com.rubensworks.custommealery.Reference;
@@ -27,8 +27,8 @@ public class Meal extends ItemFood {
     
     private MealConfig config;
 
-    protected Meal(MealConfig config, int id, int healAmount, float saturationModifier, boolean isWolfsFavoriteMeat) {
-        super(id, healAmount, saturationModifier, isWolfsFavoriteMeat);
+    protected Meal(MealConfig config, int healAmount, float saturationModifier, boolean isWolfsFavoriteMeat) {
+        super(healAmount, saturationModifier, isWolfsFavoriteMeat);
         
         this.config = config;
         this.setUnlocalizedName(this.getUniqueName());
@@ -51,7 +51,7 @@ public class Meal extends ItemFood {
      * @param config The config file defining this meal.
      */
     public Meal(MealConfig config) {
-        this(config, config.getId(), config.getHealAmount(),
+        this(config, config.getHealAmount(),
                 config.getSaturationModifier(), config.isWolfsFavoriteMeat());
     }
     
@@ -78,7 +78,7 @@ public class Meal extends ItemFood {
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister) {
+    public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon(getIconString());
     }
     
@@ -116,7 +116,7 @@ public class Meal extends ItemFood {
         } else {
             --itemStack.stackSize;
         }
-        player.getFoodStats().addStats(this);
+        player.getFoodStats().func_151686_a(this, itemStack);
         world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
         this.onFoodEaten(itemStack, world, player);
         
@@ -134,7 +134,7 @@ public class Meal extends ItemFood {
      * Set a new icon.
      * @param icon The new icon.
      */
-    public void setIcon(Icon icon) {
+    public void setIcon(IIcon icon) {
         itemIcon = icon;
     }
     

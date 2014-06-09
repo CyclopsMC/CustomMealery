@@ -1,9 +1,8 @@
 package com.rubensworks.custommealery;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import cpw.mods.fml.common.FMLLog;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Simple logger.
@@ -12,14 +11,12 @@ import cpw.mods.fml.common.FMLLog;
  */
 public class LoggerHelper
 {
-    private static Logger logger = Logger.getLogger(Reference.MOD_NAME);
+	private static Logger logger = LogManager.getLogger(Reference.MOD_NAME);
 
     /**
      * Initialize the logger.
      */
-    public static void init() {
-        logger.setParent(FMLLog.getLogger());
-    }
+    public static void init() { }
     
     /**
      * Log a new message.
@@ -28,16 +25,5 @@ public class LoggerHelper
      */
     public static void log(Level logLevel, String message) {
         logger.log(logLevel, message);
-    }
-
-    /**
-     * Create a new logger.
-     * @param s The id of the logger.
-     * @return The logger.
-     */
-    public static Logger createLogger(String s) {
-        Logger logger = Logger.getLogger(s);
-        logger.setParent(FMLLog.getLogger());
-        return logger;
     }
 }

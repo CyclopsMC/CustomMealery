@@ -14,8 +14,8 @@ public class FurnaceRecipe {
     @SerializedName("recipeResultAmount")
     private int recipeResultAmount = 1;
     
-    @SerializedName("inputid")
-    private int inputID;
+    @SerializedName("inputnameid")
+    private String inputnameid;
     
     @SerializedName("inputmeta")
     private int inputMeta = DEFAULT_META;
@@ -24,10 +24,10 @@ public class FurnaceRecipe {
     private int experience = 0;
 
     /**
-     * @return the inputID
+     * @return the inputnameid
      */
-    public int getInputID() {
-        return inputID;
+    public String getInputNameID() {
+        return inputnameid;
     }
 
     /**
