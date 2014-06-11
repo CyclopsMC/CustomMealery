@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info imgPrefix="http://i.imgur.com/" imgSuffix=".png">
+	<slogan>A very simple mod that allows you to configure your own food and meals by just making a simple config file for them. </slogan>
+	<download for="1.6.4" version="1.2.0b">http://bit.ly/1pjYQ0K</download>
+	<download for="1.7.2" version="1.2.0b">http://bit.ly/TJRYg3</download>
+	
+	<description>
+		This mod is primarily targeted at server owners and pack/map makers who want to
+		define their own food types, for example if they wish to combine some items from
+		other mods to create a new meal.
+		
+		More details at the wiki: https://github.com/rubensworks/CustomMealery/wiki/Config-file-structure.
+ 	</description>
+ 	
+ 	<elements>
+ 	<element name="Config files">
+ 	    When first starting the mod, a "_template.json" file will be created inside the
+ 	    "config/custommealery" folder. This will contain an example of all the possible
+ 	    configuration options for food. The following examples will be for the Minecraft
+ 	    1.6 release, the differences with 1.7 can be found in the
+ 	    wiki: https://github.com/rubensworks/CustomMealery/wiki
+ 	    
+ 	    When you define your own food, you can use any folder structure you want, as long
+ 	    as it resides in the "config/custommealery" folder and ends with ".json".
+ 	    (All files not ending with ".json" or with "_" as a prefix will be ignored.)
+ 	    
+ 	    Some things that can be defined:
+[list]
+[*] Textures, including animations + color overlays.
+[*] Eat time
+[*] Saturation
+[*] Is wolf food
+[*] Rarity color
+[*] Amount of bites for one item (damage values)
+[*] Enchantment effect for icon overlay
+[*] Is always edible
+[*] Maximum stack size
+[*] Potion effects when eaten
+[*] Crafting recipe
+[*] Furnace recipe
+[/list]
+ 	</element>
+	<element name="Examples">
+		<element name="Complex crafting recipe" img="gmziMWx">
+            This is an example of a complex recipe that uses item id's, sometimes with
+            meta values and ore dictionary keys.
+[quote]
+    craftingRecipe: {
+        recipeResultAmount: 4,
+        recipe:
+        [
+            " , , ",
+            "264,3,plankWood",
+            "31999:1,264,264"
+        ]
+    }
+[/quote]
+		</element>
+		<element name="Furnace recipe" img="md41EiG">
+            Furnace recipes can also easily be added like this:
+[quote]
+    furnaceRecipe: {
+        recipeResultAmount: 4,
+        inputid: 264,
+        inputmeta: 3,
+        experience: 4
+    }
+[/quote]
+		</element>
+		<element name="Damage values" img="CtsedCh">
+            Do you want your food to be able to be eaten in multiple bites?
+            Just add a line like this to set it to eight bites per item.
+[quote]
+    damageValue: 8,
+[/quote]
+		</element>
+	</element>
+	<element name="Modpacks">
+		Regarding modpacks, anyone is more than welcome to use this mod in any modpack, both public and private.
+	</element>
+	<element name="Download and Install">
+[mod="1.7.2"]220864-custom-mealery[/mod]
+[mod="1.6.4"]220864-custom-mealery[/mod]
+Source code: https://github.com/rubensworks/CustomMealery
+	</element>
+	</elements>
+</info>
