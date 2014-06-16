@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
@@ -65,10 +65,9 @@ public class ConfigLoader {
         File template = new File(configDirectory, TEMPLATE_NAME);
         if(!template.exists()) {
             try {
-                File resourcesTemplate = new File(this.getClass()
-                        .getResource(RESOURCES_TEMPLATE_PATH).toURI());
-                FileUtils.copyFile(resourcesTemplate, template);
-            } catch (URISyntaxException e) {
+                InputStream is = getClass().getResourceAsStream(RESOURCES_TEMPLATE_PATH);
+                FileUtils.copyInputStreamToFile(is, template);
+            } catch (IOException e) {
                 // Impossible!
             }
             
