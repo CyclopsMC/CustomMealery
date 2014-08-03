@@ -8,11 +8,12 @@
   "logoFile": "/mods/evilcraft/textures/logo.png",
   "url": "https://github.com/rubensworks/CustomMealery",
   "updateUrl": "http://minecraft.curseforge.com/mc-mods/220864-custom-mealery",
-  "authors": [
+  "authorList": [
   	"rubensworks (aka kroeserr)"
   ],
   "credits": "kroeserr",
   "parent":"",
-  "screenshots": []
+  "screenshots": [],
+  "dependencies": []
 }
 ]
